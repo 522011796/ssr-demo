@@ -4,13 +4,12 @@
       <Button @click="changeLocale($event,'en')">英文</Button>
       <Button @click="changeLocale($event,'zh')">中文</Button>
     </div>
-    <Divider />
+    <hr />
     <div>
       语言切换：{{ $t('home.introduction') }}}
     </div>
-    <Divider />
     <div>
-      <div style="margin:10px 0px 10px 0px;">表单验证：</div>
+      <div style="padding:10px 0px 10px 0px;">表单验证：</div>
       <div class="login-info" style="width: 50%;">
         <Form :model="ruleForm" ref="ruleForm" :label-width="0">
           <FormItem label="" prop="username" :rules="$filter_rules({required:true})" style="height:45px;">
