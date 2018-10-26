@@ -61,7 +61,8 @@ module.exports = {
     '~plugins/validation'
   ],
   css: [
-    '~assets/main.css'
+    '~assets/main.css',
+    '~assets/font-awesome/css/font-awesome.min.css'
   ],
   router: {
     middleware: 'i18n'
