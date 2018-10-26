@@ -56,7 +56,8 @@ module.exports = {
   plugins: [
     {src: '~plugins/iview', ssr: true},
     {src: '~plugins/axios', ssr: true},
-    '~plugins/i18n'
+    '~plugins/i18n',
+    '~plugins/moment'
   ],
   css: [
     '~assets/main.css'

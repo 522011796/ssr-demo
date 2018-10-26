@@ -1,8 +1,11 @@
 <template>
   <section class="container">
     <div>
-      <Button @click="changeLocale($event,'en')">英文 {{ $t('home.introduction') }}</Button>
-      <Button @click="changeLocale($event,'zh')">中文 {{ $t('home.introduction') }}</Button>
+      <Button @click="changeLocale($event,'en')">英文</Button>
+      <Button @click="changeLocale($event,'zh')">中文</Button>
+    </div>
+    <div>
+      {{ $t('home.introduction') }}}
     </div>
     <div v-for="(item,index) in list" :key="index">
       <div v-html="item.title"></div>
@@ -25,6 +28,7 @@ export default {
   },
   methods:{
     init(){
+      //console.log(this.$moment().format('dddd'));
       this.$axios.get('/proxy/topics').then(res=>{
         this.list = res.data.data;
       });
@@ -32,8 +36,6 @@ export default {
     changeLocale(obj,lang) {
       let locale = lang ? lang : Cookies.get('user_lang');
       this.$i18n.locale = locale;
-      //this.$store.state.locale = locale;
-      this.$store.commit('SET_LANG', locale)
       Cookies.set('user_lang',locale);
     },
   }
