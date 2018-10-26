@@ -1,9 +1,17 @@
 import Vue from 'vue'
 /**
  * 以下为开发的vue插件
- * */
+ *
+ * 参数 item
+ * required true  必填项
+ * maxLength  字符串的最大长度
+ * min 和 max 必须同时给 min < max  type=number
+ * type 手机号 mobile
+ *      邮箱   email
+ *      网址   url
+ *      持续添加中.......
+ **/
 var Validation = {};
-
 Vue.prototype.$filter_rules = function(item){
   let rules = [];
   if(item.required){

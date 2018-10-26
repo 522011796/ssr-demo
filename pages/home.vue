@@ -4,11 +4,14 @@
       <Button @click="changeLocale($event,'en')">英文</Button>
       <Button @click="changeLocale($event,'zh')">中文</Button>
     </div>
+    <Divider />
     <div>
-      {{ $t('home.introduction') }}}
+      语言切换：{{ $t('home.introduction') }}}
     </div>
+    <Divider />
     <div>
-      <div class="login-info">
+      <div style="margin:10px 0px 10px 0px;">表单验证：</div>
+      <div class="login-info" style="width: 50%;">
         <Form :model="ruleForm" ref="ruleForm" :label-width="0">
           <FormItem label="" prop="username" :rules="$filter_rules({required:true})" style="height:45px;">
             <Input prefix="ios-contact" v-model="ruleForm.username" placeholder="" class="input-height" />
@@ -18,13 +21,15 @@
           </FormItem>
         </Form>
       </div>
-      <div style="text-align: center">
+      <div style="text-align: center;width: 50%">
         <Button long  style="height:45px;"  @click="handleSubmit('ruleForm')">
           <span>login</span>
         </Button>
       </div>
     </div>
-    <div v-for="(item,index) in list" :key="index">
+    <Divider />
+    api列表调用：
+    <div v-for="(item,index) in list" :key="index" style="width: 50%">
       <div v-html="item.title"></div>
     </div>
   </section>
