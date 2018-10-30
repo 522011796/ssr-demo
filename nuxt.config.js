@@ -24,7 +24,7 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    vendor: ['axios','js-cookie','i18n'],
+    vendor: ['axios','js-cookie','i18n','external_library'],
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
@@ -65,7 +65,7 @@ module.exports = {
     '~assets/font-awesome/css/font-awesome.min.css'
   ],
   router: {
-    middleware: 'i18n'
+    middleware: ['i18n','browser']
   }
 }
 

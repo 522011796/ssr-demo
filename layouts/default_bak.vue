@@ -1,14 +1,27 @@
 <template>
   <div>
-    <div style="background: #ffffff;height:50px;border-bottom:1px solid #dddddd;position: fixed;width: 100%;z-index: 2;">
-      header
+    <div>
+      <Menu mode="horizontal" active-name="1">
+        <div class="layout-logo">logo</div>
+        <div class="layout-nav">
+          <MenuItem name="1">
+            <Icon type="ios-paper" />
+            {{$t('home.introduction')}}
+          </MenuItem>
+          <MenuItem name="2">
+            <Icon type="ios-paper" />
+            {{$t('home.introduction')}}
+          </MenuItem>
+        </div>
+        <div class="clearfix"></div>
+      </Menu>
     </div>
-    <div v-if="loadingShow">
-      <div class="div-left" :style="styleMenuObjectLeft">
-
+    <div>
+      <div :style="styleMenuObjectLeft" class="pull-left div-left">
+        1
       </div>
-      <div class="div-right">
-        <div :style="styleMenuObjectRight" style="background: #ffffff;position: relative">
+      <div class="div-right" style="position: relative">
+        <div :style="styleMenuObjectRight" style="padding:10px 10px;">
           <nuxt></nuxt>
         </div>
         <div class="div-footer">footer</div>
@@ -23,15 +36,15 @@
     name: 'layout',
     data () {
       return {
-        loadingShow:false,
         styleMenuObjectLeft: {
           height: '',
+          top:'50px',
           'overflow-y': 'auto',
         },
         styleMenuObjectRight: {
           minHeight: '',
-          height:'',
-          position:'relative'
+          top:'50px',
+          'overflow-y': 'auto',
         }
       }
     },
@@ -41,19 +54,16 @@
     methods: {
       hh() {
         if (process.browser) {
-          this.styleMenuObjectLeft.height = window.innerHeight-50 + 'px';
-          this.styleMenuObjectRight.minHeight = window.innerHeight-100 + 'px';
-          this.loadingShow = true;
+          this.styleMenuObjectLeft.height = window.innerHeight - 50 + 'px';
+          this.styleMenuObjectRight.minHeight = window.innerHeight - 80 + 'px';
         }
       }
     },
     mounted() {
       // 注：window.onresize只能在项目内触发1次
       var _self = this;
-      if (process.browser) {
-        window.onresize = function () {
-          _self.hh();
-        }
+      window.onresize = function () {
+        _self.hh();
       }
     }
   }
@@ -63,25 +73,17 @@
   .div-left {
     width: 200px;
     float: left;
-    background: #f8f8f9;
-    position: fixed;
-    top:50px;
   }
   .div-right{
     margin-left:200px;
     text-align: left;
     border-left:1px solid #dddddd;
-    background: #f8f8f9;
-    padding:10px 10px;
-    position: relative;
-    top:50px;
-    z-index: 1;
   }
   .div-footer{
     height:30px;
     line-height:30px;
     text-align: center;
-    background: #f8f8f9;
+    background: #dddddd;
   }
   .layout-logo{
     float: left;
@@ -94,9 +96,6 @@
     margin-left: 200px;
     height:100%;
     position: relative;
-  }
-  .clearfix{
-    clear:both;
   }
 </style>
 
