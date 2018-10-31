@@ -2,13 +2,13 @@
   <div>
     <div class="header">
       <Menu ref="top_menu" mode="horizontal" :active-name="activeMenu" @on-select="selMainMenu">
-        <div class="layout-logo">logo</div>
+        <div class="layout-logo">{{activeMenu}}</div>
         <div class="layout-nav">
-          <MenuItem name="menu1" to="/">
+          <MenuItem name="dir1" :to="{path: '/dir1/home',name:'dir1-home'}">
             <Icon type="ios-paper" />
             {{$t('home.introduction')}}
           </MenuItem>
-          <MenuItem name="menu2" to="/home">
+          <MenuItem name="dir2" :to="{path:'/dir2/home1',name:'dir2-home1'}">
             <Icon type="ios-paper" />
             {{$t('home.introduction')}}
           </MenuItem>
@@ -18,28 +18,28 @@
     </div>
     <div v-if="loadingShow">
       <div class="div-left" :style="styleMenuObjectLeft">
-        <div :class="menu == 'menu1' ? 'show' : 'hidden'">
+        <div :class="menu == 'dir1' ? 'show' : 'hidden'">
           <Menu ref="side_menu" :active-name="menuSilder ? menuSilder : activeSilder" @on-select="selMenu">
             <div>
-              <MenuItem name="index" to="/">
+              <MenuItem name="dir1-home" :to="{path:'/dir1/home',name:'dir1-home'}">
                 <Icon type="md-document" />
                 菜单1
               </MenuItem>
-              <MenuItem name="about" to="/about">
+              <MenuItem name="dir1-about" :to="{path:'/dir1/about',name:'dir1-about'}">
                 <Icon type="md-chatbubbles" />
                 菜单2
               </MenuItem>
             </div>
           </Menu>
         </div>
-        <div :class="menu == 'menu2' ? 'show' : 'hidden'">
+        <div :class="menu == 'dir2' ? 'show' : 'hidden'">
           <Menu :active-name="menuSilder ? menuSilder : activeSilder" @on-select="selMenu">
             <div>
-              <MenuItem name="home" to="/home">
+              <MenuItem name="dir2-home1" :to="{path:'/dir2/home1',name:'dir2-home1'}">
                 <Icon type="md-document" />
                 菜单2
               </MenuItem>
-              <MenuItem name="about2" to="/about2">
+              <MenuItem name="dir2-about2" :to="{path:'/dir2/about2',name:'dir2-about2'}">
                 <Icon type="md-chatbubbles" />
                 菜单3
               </MenuItem>
@@ -63,7 +63,6 @@
     name: 'layout',
     computed: {
       menu(event){
-        console.log(this.activeMenu);
         return event.activeMenu;
       },
       menuSilder(event){
@@ -125,13 +124,14 @@
       }
     },
     watch: {
-      '$route': function () {//监听路由变化,为了浏览器点击后退和前进也能切换菜单选中
+      '$route': function (to, from) {//监听路由变化,为了浏览器点击后退和前进也能切换菜单选中
         this.activeSilder = this.$route.name;
+        this.activeMenu = this.$route.name.split("-")[0];
         this.$nextTick(()=>{//必须使用该方法才能动态改变menu组件的选中
           this.$refs.side_menu.updateOpened();
           this.$refs.side_menu.updateActiveName();
           this.$refs.top_menu.updateOpened();
-          this.$refs.top_menu.updateActiveName()
+          this.$refs.top_menu.updateActiveName();
         });
       }
     }
