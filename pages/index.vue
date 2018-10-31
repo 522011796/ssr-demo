@@ -6,7 +6,12 @@
     </div>
     <hr />
     <div>
-      语言切换：{{ $t('home.introduction') }}}
+      <div>
+        语言切换：{{ $t('home.introduction') }}}
+      </div>
+      <div>
+        <nuxt-link :to="{path: '/dir1/home',name:'dir1-home'}">切换到另外一个布局</nuxt-link>
+      </div>
     </div>
     <div>
       <div style="padding:10px 0px 10px 0px;">表单验证：</div>
@@ -37,6 +42,7 @@
 <script>
   import Cookies from 'js-cookie'
   export default {
+    layout: 'fullscreen',
     data () {
       return {
         msg: 'Welcome to Your Vue.js App',
