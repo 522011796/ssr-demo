@@ -73,7 +73,7 @@
       return {
         loadingShow:false,
         activeSilder:'index',
-        activeMenu:'menu1',
+        activeMenu:'dir1',
         styleMenuObjectLeft: {
           height: '',
           'overflow-y': 'auto',
