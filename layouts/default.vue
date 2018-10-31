@@ -1,17 +1,57 @@
 <template>
   <div>
-    <div style="background: #ffffff;height:50px;border-bottom:1px solid #dddddd;position: fixed;width: 100%;z-index: 2;">
-      header
+    <div class="header">
+      <Menu ref="top_menu" mode="horizontal" :active-name="activeMenu" @on-select="selMainMenu">
+        <div class="layout-logo">logo</div>
+        <div class="layout-nav">
+          <MenuItem name="menu1" to="/">
+            <Icon type="ios-paper" />
+            {{$t('home.introduction')}}
+          </MenuItem>
+          <MenuItem name="menu2" to="/home">
+            <Icon type="ios-paper" />
+            {{$t('home.introduction')}}
+          </MenuItem>
+        </div>
+        <div class="clearfix"></div>
+      </Menu>
     </div>
     <div v-if="loadingShow">
       <div class="div-left" :style="styleMenuObjectLeft">
-
+        <div :class="menu == 'menu1' ? 'show' : 'hidden'">
+          <Menu ref="side_menu" :active-name="menuSilder ? menuSilder : activeSilder" @on-select="selMenu">
+            <div>
+              <MenuItem name="index" to="/">
+                <Icon type="md-document" />
+                菜单1
+              </MenuItem>
+              <MenuItem name="about" to="/about">
+                <Icon type="md-chatbubbles" />
+                菜单2
+              </MenuItem>
+            </div>
+          </Menu>
+        </div>
+        <div :class="menu == 'menu2' ? 'show' : 'hidden'">
+          <Menu :active-name="menuSilder ? menuSilder : activeSilder" @on-select="selMenu">
+            <div>
+              <MenuItem name="home" to="/home">
+                <Icon type="md-document" />
+                菜单2
+              </MenuItem>
+              <MenuItem name="about2" to="/about2">
+                <Icon type="md-chatbubbles" />
+                菜单3
+              </MenuItem>
+            </div>
+          </Menu>
+        </div>
       </div>
       <div class="div-right">
         <div :style="styleMenuObjectRight" style="background: #ffffff;position: relative">
           <nuxt></nuxt>
         </div>
-        <div class="div-footer">footer</div>
+        <!--<div class="div-footer">footer</div>-->
       </div>
       <div class="clearfix"></div>
     </div>
@@ -21,9 +61,20 @@
 <script>
   export default {
     name: 'layout',
+    computed: {
+      menu(event){
+        console.log(this.activeMenu);
+        return event.activeMenu;
+      },
+      menuSilder(event){
+        return this.$route.name;
+      }
+    },
     data () {
       return {
         loadingShow:false,
+        activeSilder:'index',
+        activeMenu:'menu1',
         styleMenuObjectLeft: {
           height: '',
           'overflow-y': 'auto',
@@ -36,15 +87,32 @@
       }
     },
     created() {
+      if (process.browser) {
+        let activeSilder = localStorage.getItem("activeSilder") ? localStorage.getItem("activeSilder") : 'index';
+        this.activeSilder = activeSilder;
+        let activeMenu = localStorage.getItem("activeMenu") ? localStorage.getItem("activeMenu") : 'menu1';
+        this.activeMenu = activeMenu;
+      }
       this.hh();
     },
     methods: {
       hh() {
         if (process.browser) {
-          this.styleMenuObjectLeft.height = window.innerHeight-50 + 'px';
-          this.styleMenuObjectRight.minHeight = window.innerHeight-100 + 'px';
-          this.loadingShow = true;
+          this.styleMenuObjectLeft.height = window.innerHeight-60 + 'px';
+          this.styleMenuObjectRight.minHeight = window.innerHeight-60 + 'px';
+          this.$nextTick(function () {
+            this.loadingShow = true;
+          });
         }
+      },
+      selMenu(event){
+        this.activeSilder = event;
+        localStorage.setItem('activeSilder',event);
+      },
+      selMainMenu(event){
+        this.activeMenu = event;
+        localStorage.setItem('activeMenu',event);
+        localStorage.removeItem("activeSilder");
       }
     },
     mounted() {
@@ -55,17 +123,34 @@
           _self.hh();
         }
       }
+    },
+    watch: {
+      '$route': function () {//监听路由变化,为了浏览器点击后退和前进也能切换菜单选中
+        this.activeSilder = this.$route.name;
+        this.$nextTick(()=>{//必须使用该方法才能动态改变menu组件的选中
+          this.$refs.side_menu.updateOpened();
+          this.$refs.side_menu.updateActiveName();
+          this.$refs.top_menu.updateOpened();
+          this.$refs.top_menu.updateActiveName()
+        });
+      }
     }
   }
 </script>
 
 <style scoped>
+  .header{
+    background: #ffffff;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+  }
   .div-left {
     width: 200px;
     float: left;
     background: #f8f8f9;
     position: fixed;
-    top:50px;
+    top:60px;
   }
   .div-right{
     margin-left:200px;
@@ -74,7 +159,7 @@
     background: #f8f8f9;
     padding:10px 10px;
     position: relative;
-    top:50px;
+    top:60px;
     z-index: 1;
   }
   .div-footer{
@@ -97,6 +182,12 @@
   }
   .clearfix{
     clear:both;
+  }
+  .hidden{
+    display: none !important;
+  }
+  .show{
+    display: block !important;
   }
 </style>
 
