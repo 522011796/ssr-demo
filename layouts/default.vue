@@ -98,7 +98,7 @@
       hh() {
         if (process.browser) {
           this.styleMenuObjectLeft.height = window.innerHeight-60 + 'px';
-          this.styleMenuObjectRight.minHeight = window.innerHeight-60 + 'px';
+          this.styleMenuObjectRight.minHeight = window.innerHeight-80 + 'px';
           this.$nextTick(function () {
             this.loadingShow = true;
           });
