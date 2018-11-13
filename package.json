@@ -1,7 +1,7 @@
 {
   "name": "ssr-demo",
   "version": "1.0.0",
-  "description": "demo",
+  "description": "ssr-demo",
   "author": "9bf_100006791283_sanguing <9bf_100006791283_sanguing@git.cloud.tencent.com>",
   "private": true,
   "scripts": {
