@@ -4,6 +4,9 @@
   "description": "ssr-demo",
   "author": "9bf_100006791283_sanguing <9bf_100006791283_sanguing@git.cloud.tencent.com>",
   "private": true,
+  "repository": {
+    "private": true
+  },
   "scripts": {
     "dev": "nuxt",
     "start": "PORT=3001 nuxt start",

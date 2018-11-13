@@ -1,4 +1,5 @@
-import qs from 'qs';
+//import qs from 'qs';
+var qs = require('qs');
 // 配置API接口地址
 var root = '/';
 // 引用axios
