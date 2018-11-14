@@ -24,9 +24,6 @@ export default {
   methods:{
     init(){
       //console.log(this.$moment().format('dddd'));
-      this.$axios.get('/proxy/topics').then(res=>{
-        this.list = res.data.data;
-      });
     },
     changeLocale(obj,lang) {
       let locale = lang ? lang : Cookies.get('user_lang');

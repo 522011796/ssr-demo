@@ -104,6 +104,16 @@
           });
         }
       },
+      setActive(){//设置菜单的选中状态，路由变化和直接通过浏览器输入对应地址，也可以设置相应的选中状态
+        this.activeSilder = this.$route.name;
+        this.activeMenu = this.$route.name.split("-")[0];
+        this.$nextTick(()=>{//必须使用该方法才能动态改变menu组件的选中
+          this.$refs.side_menu.updateOpened();
+          this.$refs.side_menu.updateActiveName();
+          this.$refs.top_menu.updateOpened();
+          this.$refs.top_menu.updateActiveName();
+        });
+      },
       selMenu(event){
         this.activeSilder = event;
         localStorage.setItem('activeSilder',event);
@@ -122,17 +132,11 @@
           _self.hh();
         }
       }
+      this.setActive();
     },
     watch: {
       '$route': function (to, from) {//监听路由变化,为了浏览器点击后退和前进也能切换菜单选中
-        this.activeSilder = this.$route.name;
-        this.activeMenu = this.$route.name.split("-")[0];
-        this.$nextTick(()=>{//必须使用该方法才能动态改变menu组件的选中
-          this.$refs.side_menu.updateOpened();
-          this.$refs.side_menu.updateActiveName();
-          this.$refs.top_menu.updateOpened();
-          this.$refs.top_menu.updateActiveName();
-        });
+        this.setActive();
       }
     }
   }

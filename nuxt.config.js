@@ -65,7 +65,7 @@ module.exports = {
     '~assets/font-awesome/css/font-awesome.min.css'
   ],
   router: {
-    middleware: ['i18n','browser']
+    middleware: ['i18n','browser','stats']
   }
 }
 
